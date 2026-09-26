@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RankForge AI — Content SEO Studio</title>
+<style>
+:root{--bg:#07111f;--card:#0d1a2b;--card2:#101f33;--line:#20334d;--text:#edf5ff;--muted:#91a4bd;--accent:#55d6be;--accent2:#7aa7ff;--danger:#ff7d8a;--warn:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#132a43 0,#07111f 45%,#050b14 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:24px}.hero{text-align:center;padding:24px 0 18px}.brand{font-size:38px;font-weight:900;letter-spacing:-1.5px}.brand span{color:var(--accent)}.sub{color:var(--muted);max-width:760px;margin:10px auto;line-height:1.6}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0}.tab{border:1px solid var(--line);background:#0a1626;color:#cbd8e8;border-radius:12px;padding:11px 16px;cursor:pointer;font-weight:700}.tab.active{background:#173448;border-color:var(--accent);color:white}
+.card{background:linear-gradient(180deg,rgba(16,31,51,.96),rgba(9,22,36,.96));border:1px solid var(--line);border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 12px 35px #0003}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.full{grid-column:1/-1}label{display:block;font-weight:800;margin:0 0 8px}input,textarea,select{width:100%;background:#071321;color:var(--text);border:1px solid #29405e;border-radius:11px;padding:13px;font:inherit;outline:none}input:focus,textarea:focus{border-color:var(--accent)}textarea{min-height:135px;resize:vertical}.hint{font-size:12px;color:var(--muted);margin-top:6px}.upload{border:1px dashed #3a5575;border-radius:14px;padding:18px;text-align:center;color:var(--muted);background:#081523}.upload input{border:0;padding:0;margin-top:10px;background:transparent}.preview{max-width:260px;max-height:180px;border-radius:10px;margin-top:12px;display:none}
+button{border:0;border-radius:12px;padding:13px 18px;font-weight:900;cursor:pointer;color:#041018;background:var(--accent);font-size:15px}.secondary{background:#172940;color:#dce9f8;border:1px solid #2b4565}.danger{background:#3a1820;color:#ffdfe3;border:1px solid #68303a}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+h2{margin:0 0 8px}.muted{color:var(--muted)}.notice{border-left:4px solid var(--accent2);padding:12px 14px;background:#0b192b;color:#b9c8dc;border-radius:8px;margin:14px 0;line-height:1.55}
+.results{display:none}.scoregrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.score{padding:16px;background:#0a1727;border:1px solid var(--line);border-radius:14px}.score b{font-size:26px;display:block;margin-top:5px}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#14352f;color:#80ead6;font-size:12px;font-weight:800}
+.asset{background:#081523;border:1px solid #203650;border-radius:14px;padding:16px;margin:11px 0}.assethead{display:flex;justify-content:space-between;gap:10px;align-items:center}.asset pre{white-space:pre-wrap;word-break:break-word;font-family:inherit;line-height:1.55;color:#dce8f5;margin:12px 0 0}.copy{padding:8px 11px;font-size:12px;background:#18304b;color:#dce9f8;border:1px solid #2a496a}
+.issue{padding:12px;border-radius:10px;margin:8px 0;background:#101f2f}.good{border-left:4px solid var(--accent)}.warn{border-left:4px solid var(--warn)}.bad{border-left:4px solid var(--danger)}
+.small{font-size:12px}.footer{text-align:center;color:#71859e;padding:25px 0}.hidden{display:none!important}
+@media(max-width:760px){.grid,.scoregrid{grid-template-columns:1fr}.brand{font-size:30px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<div class="brand">⚡ Rank<span>Forge</span> AI</div>
+<div class="sub">One simple idea, image, description or content → a complete platform-ready SEO package. Publish it, then paste the live URL back here for an audit.</div>
+</section>
+
+<div class="tabs">
+<button class="tab active" data-platform="YouTube">▶ YouTube</button>
+<button class="tab" data-platform="Instagram">◎ Instagram</button>
+<button class="tab" data-platform="Facebook">f Facebook</button>
+<button class="tab" data-platform="TikTok">♪ TikTok</button>
+<button class="tab" data-platform="Pinterest">P Pinterest</button>
+<button class="tab" data-platform="Website">🌐 Website</button>
+<button class="tab" data-platform="Fiverr">✦ Fiverr</button>
+</div>
+
+<section class="card">
+<h2>① Create Complete SEO</h2>
+<p class="muted">Aapko SEO terms jaanne ki zarurat nahi. Jo cheez aap bana rahe hain uska simple idea/content dein.</p>
+<div class="grid">
+
+<div>
+<label>Platform</label>
+<select id="platform">
+<option>YouTube</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>Pinterest</option><option>Website</option><option>Fiverr</option>
+</select>
+</div>
+
+<div>
+<label>Published URL (optional)</label>
+<input id="sourceUrl" type="url" placeholder="Agar pehle se live hai to link paste karein">
+</div>
+
+<div class="full">
+<label>Simple title / idea / topic</label>
+<input id="idea" placeholder="Example: Men's shoes sale — 4 colors — comfortable shoes">
+</div>
+
+<div class="full">
+<label>Jo kuch aapke paas hai — description, notes, script, transcript, product details...</label>
+<textarea id="content" placeholder="Sirf 1-2 lines bhi chalengi. Jitni genuine information denge, output utna accurate hoga."></textarea>
+</div>
+
+<div class="full">
+<label>Image / thumbnail / product photo (optional)</label>
+<div class="upload">
+Image upload karein. Browser mein preview rahega; actual AI vision analysis ke liye backend/API connection required hoga.
+<input id="image" type="file" accept="image/*">
+<img id="preview" class="preview">
+</div>
+</div>
+
+</div>
+
+<div class="actions">
+<button id="generate">✨ Generate Complete SEO</button>
+<button class="secondary" id="clear">Clear</button>
+</div>
+
+<div class="notice"><b>Important:</b> Ye demo aapko real workflow dikhata hai. True keyword-volume/ranking data aur reliable image understanding ke liye production backend + data/API sources connect karne honge. Tool ranking guarantee nahi karta.</div>
+</section>
+
+<section id="createResults" class="card results">
+<h2>SEO Package</h2>
+<p class="muted" id="resultIntro"></p>
+<div class="scoregrid" id="scores"></div>
+<div id="assets"></div>
+</section>
+
+<section class="card">
+<h2>② Analyze Published Result</h2>
+<p class="muted">SEO apply karke publish karne ke baad live link yahan paste karein.</p>
+<input id="auditUrl" type="url" placeholder="https://www.youtube.com/... or https://example.com/...">
+<div class="actions"><button id="audit">🔍 Analyze Live URL</button></div>
+<div id="auditResults" class="results"></div>
+</section>
+
+<div class="footer">RankForge AI · Optimize, publish, analyze, improve.</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+
+const tabs=[...document.querySelectorAll('.tab')];
+
+tabs.forEach(t=>t.onclick=()=>{
+tabs.forEach(x=>x.classList.remove('active'));
+t.classList.add('active');
+$('platform').value=t.dataset.platform
+});
+
+$('platform').onchange=e=>
+tabs.forEach(x=>x.classList.toggle('active',x.dataset.platform===e.target.value));
+
+$('image').onchange=e=>{
+const f=e.target.files[0],p=$('preview');
+if(f){
+p.src=URL.createObjectURL(f);
+p.style.display='block'
+}
+};
+
+function esc(s){
+return String(s||'').replace(/[&<>\"]/g,m=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;'
+}[m]))
+}
+
+function clean(s){
+return String(s||'').replace(/\s+/g,' ').trim()
+}
+
+function keywords(idea){
+let words=clean(idea).toLowerCase().replace(/[^\w\s-]/g,' ').split(/\s+/).filter(x=>x.length>2);
+let stop=new Set(['the','and','for','with','this','that','from','your','you','are','is','of','to','a','an','in','on','my','our']);
+return [...new Set(words.filter(x=>!stop.has(x)))].slice(0,12)
+}
+
+function titleCase(s){
+return clean(s).replace(/\b\w/g,x=>x.toUpperCase())
+}
+
+function makeData(){
+const p=$('platform').value,
+idea=clean($('idea').value)||'Your content topic',
+body=clean($('content').value),
+ks=keywords(idea+' '+body);
+
+const main=ks.slice(0,4).join(' ')||'your main topic';
+const tags=ks.slice(0,10).join(', ');
+const hash=ks.slice(0,8).map(x=>'#'+x.replace(/-/g,'')).join(' ');
+
+const desc=`Discover ${main}. ${body||'Learn more about this topic in this content.'}
+
+In this ${p} content, we cover the key details around ${ks.slice(0,5).join(', ')||'the main topic'}. Save, share, and follow for more useful content.
+
+Keywords: ${tags}`;
+
+let title;
+
+if(p==='YouTube')
+title=`${titleCase(idea)} | Complete Guide & Key Details`;
+else if(p==='Fiverr')
+title=`${titleCase(idea)} | Professional Service`;
+else
+title=titleCase(idea);
+
+return {p,idea,body,ks,main,tags,hash,desc,title};
+}
+
+function asset(label,value){
+return `<div class="asset">
+<div class="assethead">
+<b>${esc(label)}</b>
+<button class="copy" data-copy="${esc(value)}">Copy</button>
+</div>
+<pre>${esc(value)}</pre>
+</div>`
+}
+
+function renderAssets(d){
+let a=[];
+
+a.push(asset('SEO Title',d.title));
+a.push(asset('SEO Description',d.desc));
+a.push(asset('Primary & Related Keywords',d.ks.join(', ')));
+a.push(asset('Hashtags',d.hash));
+a.push(asset('Search Tags',d.tags));
+a.push(asset('CTA',`Learn more about ${d.main}. Follow/subscribe for more content.`));
+
+if(d.p==='YouTube'){
+a.push(asset('Thumbnail Text',`${titleCase(d.main)}`));
+a.push(asset('Pinned Comment',`What do you think about ${d.main}? Comment below and share your experience.`));
+a.push(asset('Suggested Chapters','00:00 Introduction\n00:30 Main topic\n02:00 Key details\n04:00 Tips / examples\n05:30 Conclusion'));
+}
+
+else if(d.p==='Instagram'||d.p==='Facebook'||d.p==='TikTok'){
+a.push(asset('Short Caption',`${d.title}\n\n${d.body||'Useful details and key points are covered here.'}\n\n${d.hash}`));
+}
+
+else if(d.p==='Website'){
+a.push(asset('Meta Title',d.title));
+a.push(asset('Meta Description',d.desc.slice(0,155)));
+a.push(asset('Suggested H1',titleCase(d.idea)));
+a.push(asset('Suggested H2s',`What is ${d.main}?\nKey features and benefits\nImportant details\nFrequently asked questions`));
+a.push(asset('Image ALT Text',`${titleCase(d.idea)} — relevant product/content image`));
+}
+
+else if(d.p==='Fiverr'){
+a.push(asset('Fiverr Search Tags',d.ks.slice(0,5).join(', ')));
+a.push(asset('Gig Description',d.desc));
+a.push(asset('FAQ',`Q: What do you provide?\nA: A clear, professional service focused on ${d.main}.\n\nQ: What information do you need?\nA: The buyer's requirements and relevant project details.`));
+a.push(asset('Package Structure','Basic — Starter service\nStandard — Expanded service\nPremium — Complete service'));
+}
+
+else if(d.p==='Pinterest'){
+a.push(asset('Pin Title',d.title));
+a.push(asset('Pin Description',d.desc));
+}
+
+return a.join('');
+}
+
+$('generate').onclick=()=>{
+const d=makeData();
+
+$('createResults').style.display='block';
+
+$('resultIntro').textContent=
+`Platform: ${d.p} · Input ko expand karke copy-ready SEO assets banaye gaye hain.`;
+
+const base=Math.min(96,58+d.ks.length*3+(d.body?8:0));
+
+$('scores').innerHTML=[
+['SEO readiness',base],
+['Keyword coverage',Math.min(94,52+d.ks.length*4)],
+['Content clarity',d.body?88:64],
+['Platform fit',86]
+].map(x=>`
+<div class="score">
+<span class="muted">${x[0]}</span>
+<b>${x[1]}/100</b>
+</div>`).join('');
+
+$('assets').innerHTML=renderAssets(d);
+
+document.querySelectorAll('.copy').forEach(b=>
+b.onclick=async()=>{
+await navigator.clipboard.writeText(b.dataset.copy);
+b.textContent='Copied';
+setTimeout(()=>b.textContent='Copy',900)
+});
+
+$('createResults').scrollIntoView({behavior:'smooth'});
+};
+
+$('clear').onclick=()=>{
+['idea','content','sourceUrl','auditUrl'].forEach(id=>$(id).value='');
+$('image').value='';
+$('preview').style.display='none';
+$('createResults').style.display='none';
+$('auditResults').style.display='none'
+};
+
+$('audit').onclick=async()=>{
+const url=clean($('auditUrl').value);
+
+if(!url){
+alert('Pehle published URL paste karein.');
+return
+}
+
+const box=$('auditResults');
+
+box.style.display='block';
+
+box.innerHTML=
+'<div class="notice">URL fetch karke public information inspect ki ja rahi hai. Kuch platforms automated access ko block kar sakte hain.</div>';
+
+try{
+
+const r=await fetch('https://r.jina.ai/'+url);
+const text=await r.text();
+
+if(!r.ok) throw new Error('Fetch failed');
+
+const low=text.toLowerCase();
+
+const hasTitle=/^title:|<title>|\\btitle\\b/.test(low);
+const hasDesc=low.includes('description');
+const len=text.length;
+
+const score=Math.max(
+35,
+Math.min(
+96,
+60+(hasTitle?12:0)+(hasDesc?10:0)+(len>800?12:0)
+)
+);
+
+box.innerHTML=`
+<h2>Live URL Audit</h2>
+
+<div class="scoregrid">
+
+<div class="score">
+<span class="muted">Overall</span>
+<b>${score}/100</b>
+</div>
+
+<div class="score">
+<span class="muted">Content found</span>
+<b>${len>500?'Yes':'Limited'}</b>
+</div>
+
+<div class="score">
+<span class="muted">Title signal</span>
+<b>${hasTitle?'Good':'Check'}</b>
+</div>
+
+<div class="score">
+<span class="muted">Description signal</span>
+<b>${hasDesc?'Good':'Check'}</b>
+</div>
+
+</div>
+
+<div class="issue good">
+<b>URL:</b> ${esc(url)}
+</div>
+
+<div class="issue ${len>500?'good':'warn'}">
+<b>Content access:</b>
+${len>500?
+'Public page content was retrieved for a basic audit.':
+'Only limited public content was retrieved; paste the content/transcript for a deeper analysis.'}
+</div>
+
+<div class="issue warn">
+<b>Important:</b>
+This browser-only demo cannot see private analytics such as YouTube impressions, CTR, retention, or actual search position. Those require official APIs/account data or a backend data provider.
+</div>`;
+
+}
+
+catch(e){
+
+box.innerHTML=`
+<h2>Audit could not fetch this URL</h2>
+
+<div class="issue warn">
+<b>Reason:</b>
+The platform may block automated requests or this browser may restrict the fetch.
+</div>
+
+<div class="notice">
+A production version should use its own backend crawler/API.
+You can still use the Create SEO section now by pasting your title, description, transcript or content.
+</div>`;
+}
+
+box.scrollIntoView({behavior:'smooth'});
+};
+</script>
+</body>
+  </html>
