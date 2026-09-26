@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RankForge AI</title>
+<style>
+body{margin:0;background:#07111f;color:#eef6ff;font-family:system-ui,Arial}.wrap{max-width:900px;margin:auto;padding:25px}.brand{font-size:34px;font-weight:900}.brand span{color:#55d6be}.card{background:#0d1a2b;border:1px solid #213651;border-radius:18px;padding:22px;margin:16px 0}input,textarea,select{width:100%;box-sizing:border-box;margin:7px 0 14px;padding:12px;border-radius:10px;border:1px solid #29415f;background:#071321;color:white}textarea{min-height:130px}button{padding:12px 16px;border:0;border-radius:10px;background:#55d6be;font-weight:800;cursor:pointer;margin:4px}.hidden{display:none}.muted{color:#92a6bf}.asset{background:#081523;padding:14px;border-radius:12px;margin:10px 0}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+</style></head><body><div class="wrap">
+<div class="top"><div class="brand">⚡ Rank<span>Forge</span> AI</div><div id="credits"></div></div>
+<div id="auth" class="card"><h2>Start Free</h2><p class="muted">Create your account and get 100 free credits.</p><div id="authmsg"></div>
+<input id="name" placeholder="Name"><input id="email" type="email" placeholder="Email"><input id="pass" type="password" placeholder="Password (6+ characters)">
+<button onclick="signup()">Create account</button><button onclick="login()">Login</button></div>
+<div id="app" class="hidden">
+<div class="card"><h2>Generate Complete SEO</h2><select id="platform"><option>YouTube</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>Pinterest</option><option>Website</option><option>Fiverr</option></select>
+<input id="idea" placeholder="Simple title / idea / topic"><textarea id="content" placeholder="Description, notes, script, product details..."></textarea>
+<button onclick="generate()">✨ Generate SEO — 5 Credits</button><button onclick="logout()">Logout</button></div>
+<div id="result" class="card hidden"></div></div></div>
+<script>
+const $=id=>document.getElementById(id);
+async function api(url,opt={}){let r=await fetch(url,{headers:{'Content-Type':'application/json'},...opt});let j=await r.json();if(!r.ok)throw Error(j.error||'Error');return j}
+async function refresh(){try{let u=await api('/api/me');$('auth').classList.add('hidden');$('app').classList.remove('hidden');$('credits').textContent='Credits: '+u.credits}catch{}}
+async function signup(){try{let j=await api('/api/signup',{method:'POST',body:JSON.stringify({name:$('name').value,email:$('email').value,password:$('pass').value})});$('authmsg').textContent='Account created — '+j.credits+' credits added.';refresh()}catch(e){$('authmsg').textContent=e.message}}
+async function login(){try{await api('/api/login',{method:'POST',body:JSON.stringify({email:$('email').value,password:$('pass').value})});refresh()}catch(e){$('authmsg').textContent=e.message}}
+async function logout(){await api('/api/logout',{method:'POST'});location.reload()}
+async function generate(){try{let j=await api('/api/generate',{method:'POST',body:JSON.stringify({platform:$('platform').value,idea:$('idea').value,content:$('content').value})});$('credits').textContent='Credits: '+j.credits;let o=j.output;$('result').classList.remove('hidden');$('result').innerHTML='<h2>SEO Package</h2>'+[['SEO Title',o.title],['Description',o.description],['Primary Keyword',o.primary_keyword],['Keywords',o.keywords.join(', ')],['Tags',o.tags],['Hashtags',o.hashtags],['Thumbnail Text',o.thumbnail_text],['CTA',o.cta]].map(x=>'<div class="asset"><b>'+x[0]+'</b><p>'+x[1].replaceAll('<','&lt;')+'</p><button onclick="navigator.clipboard.writeText('+JSON.stringify(x[1])+')">Copy</button></div>').join('')+'<b>SEO readiness: '+o.score+'/100</b>'}catch(e){alert(e.message)}}
+refresh();
+</script></body></html>
